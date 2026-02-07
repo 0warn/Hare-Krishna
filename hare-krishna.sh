@@ -2,7 +2,7 @@
 
 # ─────────────────────────────────────────────
 # Anonymizer Script v1.3
-# Author: CYBER-4RMY
+# Author: 0warn
 # Date: 2025-06-28
 # Description: Advanced MAC/IP/Tor anonymization tool
 # ─────────────────────────────────────────────
