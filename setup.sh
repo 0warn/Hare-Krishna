@@ -59,7 +59,11 @@ install_missing_packages() {
     for cmd in "${REQUIRED_CMDS[@]}"; do
         if ! command -v "$cmd" >/dev/null 2>&1; then
             log " >> Installing missing dependency: $cmd"
-            $PKG_INSTALL "$cmd"
+            if ! $PKG_INSTALL "$cmd"; then
+                echo "❌ Failed to install '$cmd'. Please install it manually and try again." >&2
+                log "Failed to install dependency: $cmd"
+                exit 1
+            fi
         else
             log " >> Dependency already installed: $cmd"
         fi
@@ -82,9 +86,20 @@ validate_script() {
 # ─────────────────────────────────────────────────────────────────
 install_system_wide() {
     sudo cp "$SCRIPT_NAME" "$INSTALL_PATH"
-    sudo cp -r "$GIT" "$PATH_GIT"
     sudo chmod +x "$INSTALL_PATH"
     log "->> Installed as system command: $INSTALL_NAME"
+
+    # Install configuration file
+    if [[ -f "hare-krishna.conf" ]]; then
+        local config_dir="/etc/hare-krishna"
+        sudo mkdir -p "$config_dir"
+        sudo cp "hare-krishna.conf" "$config_dir/hare-krishna.conf"
+        log "->> Installed configuration file to $config_dir/hare-krishna.conf"
+        echo "->> ✅ Configuration file installed: $config_dir/hare-krishna.conf"
+    else
+        log "->> Warning: hare-krishna.conf not found. Skipping config file installation."
+        echo "->> Warning: hare-krishna.conf not found. Skipping config file installation."
+    fi
     echo "->> ✅ Tool is now available as: $INSTALL_NAME"
 }
 

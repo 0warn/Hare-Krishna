@@ -1,4 +1,4 @@
-# 🔒 HARE KRISHNA - Anonymizer Tool v1.3
+# 🔒 HARE KRISHNA - Anonymizer Tool v1.5
 
 ![banner](https://img.shields.io/badge/Bash-Anonymizer-blue.svg) ![license](https://img.shields.io/badge/License-MIT-green.svg)
 
@@ -36,6 +36,9 @@ It combines **MAC address spoofing**, **IP obfuscation**, and **Tor-based routin
 ✅ IP change via Tor (`socks5h`)  
 ✅ Start/Stop anonymization sessions  
 ✅ System-wide proxy with Tor  
+✅ DNS Leak Protection (via `iptables`)  
+✅ Robust Kill Switch (via `iptables`)  
+✅ Configuration file for easy customization  
 ✅ Built-in log viewer  
 ✅ Works on Kali, Parrot, Arch, Ubuntu, Debian, and more  
 ✅ Failsafe rollback on update failure  
@@ -45,7 +48,7 @@ It combines **MAC address spoofing**, **IP obfuscation**, and **Tor-based routin
 
 ## 📥 Installation
 
-### 🔧 Using `setup.py` (Recommended)
+### 🔧 Using `setup.sh` (Recommended)
 
 ```bash
 git clone https://github.com/0warn/Hare-Krishna.git
@@ -53,14 +56,13 @@ cd Hare-Krishna
 chmod +x setup.sh
 sudo ./setup.sh
 ```
+The `setup.sh` script will install necessary dependencies, copy the `hare-krishna` executable to `/usr/local/bin`, and place the configuration file `hare-krishna.conf` into `/etc/hare-krishna/`.
 
 ➡️ After setup, run the tool via:
 
 ```bash
-sudo hare-krishna -h/--help (If system wide installed) or
-sudo bash hare-krishna -h/--help
+sudo hare-krishna -h/--help
 ```
-(To show arguments/help funciton)
 ---
 
 ## 💻 Usage
@@ -74,7 +76,7 @@ sudo ./hare-krishna.sh -ss/--status         # Show anonymization status
 sudo ./hare-krishna.sh --cip/--checkip      # To show your tor ip address 
 sudo ./hare-krishna.sh -l/--logs            # View logs
 sudo ./hare-krishna.sh -v/--version         # Show tool version
-sudo ./hare-kirhsna.sh -a/--auto            # Change ip in a gap of time
+sudo ./hare-kirhsna.sh -a/--auto [INTERVAL_SECONDS] # Auto change IP (and MAC if configured) at specified intervals (default: 300 seconds)
 ```
 
 ---
@@ -93,7 +95,35 @@ sudo ./hare-kirhsna.sh -a/--auto            # Change ip in a gap of time
 | `-v`, `--version`| Show current version                    |
 | `-d`, `--debug`  | Enable debug output                     |
 | `-h`, `--help`      | Help / usage guide                      |
-| `-a`, `--auto`      | Auto change ip address using secound                      |
+| `-a`, `--auto`      | Auto change IP (and MAC if configured) at specified intervals (default: 300 seconds)                    |
+
+---
+
+## ⚙️ Configuration
+
+`HARE-KRISHNA` can be configured using the `hare-krishna.conf` file. During installation, this file is copied to `/etc/hare-krishna/hare-krishna.conf`. The script reads settings from this file, allowing you to customize its behavior without modifying the main script.
+
+### Default Configuration (located at `/etc/hare-krishna/hare-krishna.conf`):
+```
+# HARE-KRISHNA Configuration File
+# ----------------------------------
+
+# Default network interface to use. Leave empty to auto-detect.
+# Example: INTERFACE="eth0"
+INTERFACE=""
+
+# Tor SOCKS proxy port
+TOR_PORT="9050"
+
+# Tor DNS port (used for DNS leak protection)
+DNS_PORT="5353"
+
+# Log file path
+LOG_FILE="/var/log/harekrishna.log"
+
+# State file path
+STATE_FILE="/tmp/harekrishna.state"
+```
 
 ---
 
@@ -115,6 +145,7 @@ Always run as **root or with sudo**, and make sure to:
 - Trust the Tor network  
 - Understand your legal responsibilities  
 - Use in a **controlled or ethical** environment
+- The tool now includes a **Robust Kill Switch** and **DNS Leak Protection** via `iptables` to further enhance anonymity and prevent accidental leaks.
 
 ---
 
@@ -135,7 +166,7 @@ Always run as **root or with sudo**, and make sure to:
 |-----------------------------|----------|
 | `Tor failed to start`       | `sudo systemctl restart tor` |
 | `MAC not changing`          | Ensure interface is down during change |
-| `No internet after start`   | Check DNS leaks or firewall rules |
+| `No internet after start`   | Check DNS leaks or firewall rules. The new kill switch feature might also be a reason. |
 | `proxy-setting`             | Make sure you fix your browser and system proxy setting to use it. |
 
 --- 
