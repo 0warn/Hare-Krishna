@@ -1,4 +1,4 @@
-# 🔒 HARE KRISHNA - Anonymizer Tool v1.5
+# 🔒 HARE KRISHNA - Anonymizer Tool v1.4
 
 ![banner](https://img.shields.io/badge/Bash-Anonymizer-blue.svg) ![license](https://img.shields.io/badge/License-MIT-green.svg)
 
@@ -32,18 +32,20 @@ It combines **MAC address spoofing**, **IP obfuscation**, and **Tor-based routin
 
 ## ⚙️ Features
 
-✅ MAC Address randomizer  
-✅ IP change via Tor (`socks5h`)  
-✅ Start/Stop anonymization sessions  
-✅ System-wide proxy with Tor  
-✅ DNS Leak Protection (via `iptables`)  
-✅ Robust Kill Switch (via `iptables`)  
-✅ Configuration file for easy customization  
-✅ Built-in log viewer  
-✅ Works on Kali, Parrot, Arch, Ubuntu, Debian, and more  
-✅ Failsafe rollback on update failure  
+✅ MAC Address randomizer
+✅ IP change via Tor (`socks5h`)
+✅ Start/Stop anonymization sessions
+✅ System-wide proxy with Tor
+✅ DNS Leak Protection (via `iptables`)
+✅ Robust Kill Switch (via `iptables`)
+✅ Configuration file for easy customization (local and system-wide)
+✅ Animated loading indicators for better user feedback
+✅ Enhanced colorful and interactive CLI output
+✅ Interactive menu for guided usage when no arguments are provided
+✅ Built-in log viewer
+✅ Works on Kali, Parrot, Arch, Ubuntu, Debian, and more
+✅ Failsafe rollback on update failure
 ✅ Clean CLI interface with banner, help, and status report
-
 ---
 
 ## 📥 Installation
@@ -67,17 +69,22 @@ sudo hare-krishna -h/--help
 
 ## 💻 Usage
 
+To run the tool interactively with a menu:
+```bash
+sudo ./hare-krishna.sh
+```
+
+Or use command-line arguments:
 ```bash
 sudo ./hare-krishna.sh -st/--start          # Start anonymization
 sudo ./hare-krishna.sh -sp/--stop           # Stop and restore original state
 sudo ./hare-krishna.sh -cm -m XX:XX:XX:XX:XX:XX/--changemac XX:XX:XX:XX:XX:XX   # Change MAC manually
 sudo ./hare-krishna.sh -cp/--changeip       # Change IP via Tor
 sudo ./hare-krishna.sh -ss/--status         # Show anonymization status
-sudo ./hare-krishna.sh --cip/--checkip      # To show your tor ip address 
+sudo ./hare-krishna.sh --cip/--checkip      # To show your tor ip address
 sudo ./hare-krishna.sh -l/--logs            # View logs
 sudo ./hare-krishna.sh -v/--version         # Show tool version
-sudo ./hare-kirhsna.sh -a/--auto [INTERVAL_SECONDS] # Auto change IP (and MAC if configured) at specified intervals (default: 300 seconds)
-```
+sudo ./hare-kirhsna.sh -a/--auto [INTERVAL_SECONDS] # Auto change IP (and MAC if configured) at specified intervals (default: 300 seconds)```
 
 ---
 
@@ -101,9 +108,9 @@ sudo ./hare-kirhsna.sh -a/--auto [INTERVAL_SECONDS] # Auto change IP (and MAC if
 
 ## ⚙️ Configuration
 
-`HARE-KRISHNA` can be configured using the `hare-krishna.conf` file. During installation, this file is copied to `/etc/hare-krishna/hare-krishna.conf`. The script reads settings from this file, allowing you to customize its behavior without modifying the main script.
+`HARE-KRISHNA` can be configured using the `hare-krishna.conf` file. The script first checks for `hare-krishna.conf` in the current working directory. If found, it uses that local configuration. Otherwise, it falls back to the system-wide configuration file located at `/etc/hare-krishna/hare-krishna.conf` (which is installed by `setup.sh`). This allows for both per-project custom configurations and a global setup.
 
-### Default Configuration (located at `/etc/hare-krishna/hare-krishna.conf`):
+### Default Configuration (example content, usually found at `/etc/hare-krishna/hare-krishna.conf` or in your local directory):
 ```
 # HARE-KRISHNA Configuration File
 # ----------------------------------
