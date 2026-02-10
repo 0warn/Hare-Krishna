@@ -8,13 +8,25 @@ set -euo pipefail
 # Description: Advanced MAC/IP/Tor anonymization tool
 # ─────────────────────────────────────────────
 
-CONFIG_FILE="/etc/hare-krishna/hare-krishna.conf" # Default path
+# Define potential configuration file paths
+LOCAL_CONFIG="./hare-krishna.conf"
+SYSTEM_CONFIG="/etc/hare-krishna/hare-krishna.conf"
 
-# Load configuration if available
-if [[ -f "$CONFIG_FILE" ]]; then
-    source "$CONFIG_FILE"
+# Determine which config file to use
+if [[ -f "$LOCAL_CONFIG" ]]; then
+    CONFIG_FILE="$LOCAL_CONFIG"
+    echo "Info: Using local configuration file: $CONFIG_FILE" >&2
+elif [[ -f "$SYSTEM_CONFIG" ]]; then
+    CONFIG_FILE="$SYSTEM_CONFIG"
+    echo "Info: Using system-wide configuration file: $CONFIG_FILE" >&2
 else
-    echo "Warning: Configuration file not found at $CONFIG_FILE. Using default settings." >&2
+    CONFIG_FILE="" # No config file found
+    echo "Warning: No configuration file found at $LOCAL_CONFIG or $SYSTEM_CONFIG. Using default settings." >&2
+fi
+
+# Load configuration if a file was found
+if [[ -n "$CONFIG_FILE" ]]; then
+    source "$CONFIG_FILE"
 fi
 
 # Global vars (overridden by config if present)
@@ -243,8 +255,6 @@ stop_anonymization() {
 
 change_mac() {
     debug_log "Changing MAC to specific value: $1"
-        exit 1
-    fi
     sudo ip link set "$interface" down
     sudo macchanger -m "$1" "$interface"
     sudo ip link set "$interface" up
