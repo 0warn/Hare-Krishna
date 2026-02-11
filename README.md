@@ -46,6 +46,7 @@ It combines **MAC address spoofing**, **IP obfuscation**, and **Tor-based routin
 ✅ Works on Kali, Parrot, Arch, Ubuntu, Debian, and more
 ✅ Failsafe rollback on update failure
 ✅ Clean CLI interface with banner, help, and status report
+
 ---
 
 ## 📥 Installation
@@ -84,7 +85,8 @@ sudo ./hare-krishna.sh -ss/--status         # Show anonymization status
 sudo ./hare-krishna.sh --cip/--checkip      # To show your tor ip address
 sudo ./hare-krishna.sh -l/--logs            # View logs
 sudo ./hare-krishna.sh -v/--version         # Show tool version
-sudo ./hare-kirhsna.sh -a/--auto [INTERVAL_SECONDS] # Auto change IP (and MAC if configured) at specified intervals (default: 300 seconds)```
+sudo ./hare-kirhsna.sh -a/--auto [INTERVAL_SECONDS] # Auto change IP (and MAC if configured) at specified intervals (default: 300 seconds)
+```
 
 ---
 
