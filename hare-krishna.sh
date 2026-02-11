@@ -419,7 +419,7 @@ display_menu() {
         echo -e "  \033[1;33m7.\033[0m View Logs (-l)"
         echo -e "  \033[1;35m8.\033[0m Auto Change IP (-a)"
         echo -e "  \033[0;36m9.\033[0m Show Version (-v)"
-        echo -e "  \033[0;30m0.\033[0m Exit"
+        echo -e "  \033[0;30m0.\033[0m Exit -> 0"
         echo -e "\033[1;33m════════════════════════════════════════════════\033[0m"
         read -rp $'\033[1;32mChoose an option: \033[0m' choice
 
